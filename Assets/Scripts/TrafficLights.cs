@@ -59,17 +59,17 @@ public class TrafficLights : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(topKey))
+        if (Input.GetKeyDown(topKey) || Input.GetKeyDown("[1]"))
         {
             SetLightState(1);
         }
 
-        if (Input.GetKeyDown(midKey))
+        if (Input.GetKeyDown(midKey) || Input.GetKeyDown("[2]"))
         {
             SetLightState(2);
         }
 
-        if (Input.GetKeyDown(botKey))
+        if (Input.GetKeyDown(botKey) || Input.GetKeyDown("[3]"))
         {
             SetLightState(3);
         }        
