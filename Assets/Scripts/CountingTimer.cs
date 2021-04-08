@@ -29,10 +29,6 @@ public class CountingTimer : MonoBehaviour
 
             if (carManager.bottomCarCount.Count < 3)
                 carManager.SpawnBotLane();
-
-           pedManager.SpawnBottomPedestrians();
-           pedManager.SpawnTopPedestrians();
-
         }
     }
 }

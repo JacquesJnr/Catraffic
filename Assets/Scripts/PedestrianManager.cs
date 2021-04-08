@@ -15,6 +15,9 @@ public class PedestrianManager : MonoBehaviour
     public Transform topParent;
     public Transform botParent;
 
+    [SerializeField] private float timerSpeed = 2f;
+    [SerializeField] private float elapsed;
+
     void Start()
     {
         
@@ -22,14 +25,33 @@ public class PedestrianManager : MonoBehaviour
 
     void Update()
     {
+        elapsed += Time.deltaTime;
+        if (elapsed >= timerSpeed)
+        {
+            elapsed = 0f;
+
+            SpawnBottomPedestrians();
+            SpawnTopPedestrians();
+        }
+
         for (int t = 0; t < topPedestrians.Count; t++)
         {
             topPedestrians[t].name = "Downwards_" + (t + 1).ToString();
+
+            if (transform.position.y <= -6f) 
+            {
+                Destroy(topPedestrians[t]);
+            }
         }
 
         for (int b = 0; b < bottomPedestrians.Count; b++)
         {
             bottomPedestrians[b].name = "Upwards_" + (b + 1).ToString();
+
+            if (transform.position.y >= 6f)
+            {
+                Destroy(bottomPedestrians[b]);
+            }
         }
     }
 

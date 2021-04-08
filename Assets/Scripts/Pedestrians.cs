@@ -17,21 +17,14 @@ public class Pedestrians : MonoBehaviour
 
         if(gameObject.tag == "PedTop")
         {
-            if(transform.position.y <= -6f)
-                Destroy(gameObject);
-
             transform.position = Vector2.MoveTowards(transform.position ,new Vector2(0.5f, -6f), step);
         }
 
         if (gameObject.tag == "PedBot")
         {
-            if (transform.position.y >= 6f)
-                Destroy(gameObject);
 
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(-0.5f, 6f), step);
         }
-
-        
     }
 
 }
