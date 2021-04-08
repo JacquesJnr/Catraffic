@@ -1,8 +1,12 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+
 
 // Jacques Visser
 // Apr 6th 2021
-// Catraffic
+// Catrafficx
 
 /*
     Each lane has a traffic light that can switched on or off to control the flow of traffic in that respective lane,    
@@ -32,11 +36,14 @@ public class TrafficLights : MonoBehaviour
     private KeyCode midKey;
     private KeyCode botKey;
 
+
+    [SerializeField] UnityEvent OnGreen;
+
     private void Awake()
     {
-        greenLight = Resources.Load<Sprite>("Art/Green");
-        redLight = Resources.Load<Sprite>("Art/Red");
-        noLight = Resources.Load<Sprite>("Art/Neutral");
+        greenLight = Resources.Load<Sprite>("Art/Green1");
+        redLight = Resources.Load<Sprite>("Art/Red1");
+        noLight = Resources.Load<Sprite>("Art/Blank");
     }
 
     private void Start()
@@ -62,12 +69,18 @@ public class TrafficLights : MonoBehaviour
         {
             SetLightState(botLaneRenderer);
         }
+
+        
     }
 
     public void SetLightState(SpriteRenderer renderer)
     {
         if(renderer.sprite != greenLight)
+        {
             renderer.sprite = greenLight;
+            OnGreen.Invoke();
+        }
+            
         else
             renderer.sprite = redLight;
     }

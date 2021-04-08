@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 // Jacques Visser
 // Apr 6th 2021
@@ -25,44 +26,55 @@ using UnityEngine;
     set to Stopped, the respective lanes light will turn inactive (RED) and the Lolipop Cat will force the entire lane to stop moving for a set amount of time.
    */
 
+public enum CarDirection
+{
+    Left,
+    Right
+}
+
 public class Car : MonoBehaviour
 {
-    [SerializeField] private Transform topSpawn;
-    [SerializeField] private Transform midSpawn;
-    [SerializeField] private Transform botSpawn;
-    [SerializeField] private GameObject carRightPrefab;
-    [SerializeField] private GameObject carLeftPrefab;
+    public float speed = 5f;
+    [SerializeField] private float rayLength = 4f;
+    public CarDirection direction;
+    public Vector2 maxTravelDistance;
 
-    public Transform topLane,midLane,botLane;
-
-    public GameObject spawnedCar;
-
-
-    private void Start()
+    private void Awake()
     {
         
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            spawnedCar = Instantiate(carRightPrefab, topSpawn.position, Quaternion.identity, topLane);          
-        }
+        float step = speed * Time.deltaTime;
 
-        if(GameObject.Find("car_right(Clone)"))
-        {
-            // If light is red
-            if(spawnedCar.transform.localPosition.x > -5.8f)
-            {
-                spawnedCar.transform.Translate(Vector2.left * 20 * Time.deltaTime);
-            }            
+        transform.position = Vector2.MoveTowards(transform.position, new Vector2(2.45f, 2.4f), step);
+    }
 
-            // The c
-            if (spawnedCar.transform.localPosition.x < -18.0f)
-            {
-                Destroy(spawnedCar);
-            }
+    // Draws a raycast infront of the cars
+    public void PedestrianCheck()
+    {
+        // Send out a ray cast infront of the car
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), rayLength);
+
+        // If the ray hits something
+        if (hit.collider != null)
+        {
+            Debug.Log(gameObject.name + ": hit " + hit.collider.name);            
+        }       
+        else
+        {
+            Debug.Log(gameObject.name + ": Ready To Move!");        
         }        
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+
+        if (direction == CarDirection.Left)
+            Gizmos.DrawRay(transform.position, Vector2.left * rayLength);
+        else
+            Gizmos.DrawRay(transform.position, Vector2.right * rayLength);
     }
 }
