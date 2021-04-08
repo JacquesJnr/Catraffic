@@ -32,54 +32,53 @@ public enum CarDirection
     Right
 }
 
+public enum Lane
+{
+    Top,
+    Middle,
+    Bottom
+}
+
 public class Car : MonoBehaviour
 {
-    public float speed = 5f;
-    float topHeight = 2.4f;
-    [SerializeField] private float rayLength = 4f;
     public CarDirection direction;
-    public Vector2 maxTravelDistance;
-    private CarManager carManager;
-
-    public bool moving;
+    public Lane lane;
+    public float force = 2f;
+    private Rigidbody2D rb;
+    private BoxCollider2D box;
 
     private void Awake()
     {
-        carManager = FindObjectOfType<CarManager>();
+        rb = GetComponent<Rigidbody2D>();
+        box = GetComponent<BoxCollider2D>();
+
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        float step = speed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, maxTravelDistance, step);
-    }
-
-    // Draws a raycast infront of the cars
-    public void PedestrianCheck()
-    {
-        // Send out a ray cast infront of the car
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.TransformDirection(Vector2.left), rayLength);
-
-        // If the ray hits something
-        if (hit.collider != null)
+        float step = force * Time.deltaTime;
+        
+        // Move the car
+        switch (direction)
         {
-            Debug.Log(gameObject.name + ": hit " + hit.collider.name);
-            maxTravelDistance = new Vector2(2.25f, topHeight);
-        }       
-        else
+            case CarDirection.Left:
+                rb.AddForce(Vector2.left * step);
+                break;
+            case CarDirection.Right:
+                rb.AddForce(Vector2.right * step);
+                break;
+        }
+
+        if(lane == Lane.Top || lane == Lane.Bottom)
         {
-            Debug.Log(gameObject.name + ": Ready To Move!");
-            maxTravelDistance = new Vector2(-12f, topHeight);
-        }        
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-
-        if (direction == CarDirection.Left)
-            Gizmos.DrawRay(transform.position, Vector2.left * rayLength);
-        else
-            Gizmos.DrawRay(transform.position, Vector2.right * rayLength);
+            if (transform.localPosition.x < -20f)
+                Destroy(gameObject);
+        }
+        
+        if(lane == Lane.Middle)
+        {
+            if (transform.localPosition.x > 20f)
+                Destroy(gameObject);
+        }
     }
 }

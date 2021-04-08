@@ -28,6 +28,10 @@ public class TrafficLights : MonoBehaviour
     [SerializeField] private SpriteRenderer midLaneRenderer;
     [SerializeField] private SpriteRenderer botLaneRenderer;
 
+    [SerializeField] private BoxCollider2D trafficBlockerTop;
+    [SerializeField] private BoxCollider2D trafficBlockerMid;
+    [SerializeField] private BoxCollider2D trafficBlockerBot;
+
     private Sprite greenLight;
     private Sprite redLight;
     private Sprite noLight;
@@ -36,8 +40,8 @@ public class TrafficLights : MonoBehaviour
     private KeyCode midKey;
     private KeyCode botKey;
 
-    [SerializeField] UnityEvent onGreen;
-    [SerializeField] UnityEvent onRed;
+    [SerializeField] public UnityEvent onGreen;
+    [SerializeField] public UnityEvent onRed;
 
     private void Awake()
     {
@@ -57,32 +61,51 @@ public class TrafficLights : MonoBehaviour
     {
         if (Input.GetKeyDown(topKey))
         {
-            SetLightState(topLaneRenderer);
+            SetLightState(1);
         }
 
         if (Input.GetKeyDown(midKey))
         {
-            SetLightState(midLaneRenderer);
+            SetLightState(2);
         }
 
         if (Input.GetKeyDown(botKey))
         {
-            SetLightState(botLaneRenderer);
+            SetLightState(3);
         }        
     }
 
-    public void SetLightState(SpriteRenderer renderer)
+    public void SetLightState(int trafficLight)
     {
+        SpriteRenderer renderer = null;
+        BoxCollider2D blocker = null;
+        
+        switch (trafficLight)
+        {
+            case 1:
+                renderer = topLaneRenderer;
+                blocker = trafficBlockerTop;
+                break;
+            case 2:
+                renderer = midLaneRenderer;
+                blocker = trafficBlockerMid;
+                break;
+            case 3:
+                renderer = botLaneRenderer;
+                blocker = trafficBlockerBot;
+                break;
+        }
+
         if(renderer.sprite != greenLight)
         {
             renderer.sprite = greenLight;
-            onGreen.Invoke();
+            blocker.enabled = false;
         }
 
         else 
         {
             renderer.sprite = redLight;
-            onRed.Invoke();
+            blocker.enabled = true;
         }
     }
 }
