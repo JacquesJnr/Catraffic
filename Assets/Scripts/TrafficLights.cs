@@ -36,8 +36,8 @@ public class TrafficLights : MonoBehaviour
     private KeyCode midKey;
     private KeyCode botKey;
 
-
-    [SerializeField] UnityEvent OnGreen;
+    [SerializeField] UnityEvent onGreen;
+    [SerializeField] UnityEvent onRed;
 
     private void Awake()
     {
@@ -68,9 +68,7 @@ public class TrafficLights : MonoBehaviour
         if (Input.GetKeyDown(botKey))
         {
             SetLightState(botLaneRenderer);
-        }
-
-        
+        }        
     }
 
     public void SetLightState(SpriteRenderer renderer)
@@ -78,10 +76,13 @@ public class TrafficLights : MonoBehaviour
         if(renderer.sprite != greenLight)
         {
             renderer.sprite = greenLight;
-            OnGreen.Invoke();
+            onGreen.Invoke();
         }
-            
-        else
+
+        else 
+        {
             renderer.sprite = redLight;
+            onRed.Invoke();
+        }
     }
 }

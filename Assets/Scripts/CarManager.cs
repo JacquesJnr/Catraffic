@@ -12,15 +12,40 @@ public class CarManager : MonoBehaviour
 
     public Transform topLane, midLane, botLane;
 
-    [SerializeField] List<GameObject> carsInTopLane;
+    [SerializeField] public List<GameObject> topCars;
+    [SerializeField] public List<GameObject> middleCars;
+    [SerializeField] public List<GameObject> bottomCars;
 
     private void Awake()
     {
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Top")) 
         {
-            carsInTopLane.Add(go);
-            go.name = "Top_" + carsInTopLane.IndexOf(go).ToString();
+            topCars.Add(go);
+            go.name = "Top_" + topCars.IndexOf(go).ToString();
         }
-            
+
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Middle"))
+        {
+            topCars.Add(go);
+            go.name = "Middle_" + topCars.IndexOf(go).ToString();
+        }
+
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Bottom"))
+        {
+            topCars.Add(go);
+            go.name = "Bottom_" + topCars.IndexOf(go).ToString();
+        }
+    }
+
+    private void Update()
+    {
+        for(int i = 0; i < topCars.Count; i++)
+        {
+            if(topCars[i].transform.localPosition.x < -20f)
+            {
+                Destroy(topCars[i]); 
+                topCars.RemoveAt(i);
+            }
+        }
     }
 }

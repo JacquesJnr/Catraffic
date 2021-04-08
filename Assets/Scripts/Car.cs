@@ -35,20 +35,23 @@ public enum CarDirection
 public class Car : MonoBehaviour
 {
     public float speed = 5f;
+    float topHeight = 2.4f;
     [SerializeField] private float rayLength = 4f;
     public CarDirection direction;
     public Vector2 maxTravelDistance;
+    private CarManager carManager;
+
+    public bool moving;
 
     private void Awake()
     {
-        
+        carManager = FindObjectOfType<CarManager>();
     }
 
     private void Update()
     {
         float step = speed * Time.deltaTime;
-
-        transform.position = Vector2.MoveTowards(transform.position, new Vector2(2.45f, 2.4f), step);
+        transform.position = Vector2.MoveTowards(transform.position, maxTravelDistance, step);
     }
 
     // Draws a raycast infront of the cars
@@ -60,11 +63,13 @@ public class Car : MonoBehaviour
         // If the ray hits something
         if (hit.collider != null)
         {
-            Debug.Log(gameObject.name + ": hit " + hit.collider.name);            
+            Debug.Log(gameObject.name + ": hit " + hit.collider.name);
+            maxTravelDistance = new Vector2(2.25f, topHeight);
         }       
         else
         {
-            Debug.Log(gameObject.name + ": Ready To Move!");        
+            Debug.Log(gameObject.name + ": Ready To Move!");
+            maxTravelDistance = new Vector2(-12f, topHeight);
         }        
     }
 
