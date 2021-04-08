@@ -7,10 +7,12 @@ public class CountingTimer : MonoBehaviour
    [SerializeField] private float timerSpeed = 0.8f;
    [SerializeField] private float elapsed;
     private CarManager carManager;
+    private PedestrianManager pedManager;
     
     private void Awake()
     {
-        carManager = FindObjectOfType<CarManager>(); 
+        carManager = FindObjectOfType<CarManager>();
+        pedManager = FindObjectOfType<PedestrianManager>();
     }
 
     private void Update()
@@ -27,6 +29,10 @@ public class CountingTimer : MonoBehaviour
 
             if (carManager.bottomCarCount.Count < 3)
                 carManager.SpawnBotLane();
+
+          //  pedManager.SpawnBottomPedestrians();
+           // pedManager.SpawnTopPedestrians();
+
         }
     }
 }

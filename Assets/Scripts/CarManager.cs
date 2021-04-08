@@ -84,5 +84,4 @@ public class CarManager : MonoBehaviour
 
         bottomCarCount.Add(go);
     }
-
 }

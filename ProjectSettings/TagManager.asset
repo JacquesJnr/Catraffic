@@ -7,6 +7,8 @@ TagManager:
   - Top
   - Bottom
   - Mid
+  - PedTop
+  - PedBot
   layers:
   - Default
   - TransparentFX
