@@ -51,7 +51,6 @@ public class Car : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
-
     }
 
     private void FixedUpdate()
