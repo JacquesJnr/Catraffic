@@ -19,6 +19,14 @@ public class CarManager : MonoBehaviour
 
     private Car car;
 
+    //Jake's sound stuff
+    public GameObject camera;
+    public AudioClip honkTop;
+    public AudioClip honkMid;
+    public AudioClip honkBot;
+    AudioSource cameraSound;
+    //Jake's sound stuff
+
     private void Awake()
     {
         car = FindObjectOfType<Car>();
@@ -31,6 +39,11 @@ public class CarManager : MonoBehaviour
 
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("Bottom"))
             bottomCarCount.Add(go);
+
+        //Jake's sound stuff
+        cameraSound = camera.GetComponent<AudioSource>();
+        //Jake's sound stuff
+
     }
 
     private void Update()
@@ -64,6 +77,11 @@ public class CarManager : MonoBehaviour
 
     public void SpawnTopLane()
     {
+
+        //Jake's audio stuff
+        cameraSound.PlayOneShot(honkTop, 1f);
+        //Jake's audio stuff
+
         GameObject go;
         go = Instantiate(topPrefab, topSpawn.position, Quaternion.identity, topLane);
 
@@ -72,6 +90,11 @@ public class CarManager : MonoBehaviour
 
     public void SpawnMidLane()
     {
+
+        //Jake's audio stuff
+        cameraSound.PlayOneShot(honkMid, 1f);
+        //Jake's audio stuff
+
         GameObject go;
         go = Instantiate(middlePrefab, midSpawn.position, Quaternion.identity, midLane);
 
@@ -79,6 +102,11 @@ public class CarManager : MonoBehaviour
     }
     public void SpawnBotLane()
     {
+
+        //Jake's audio stuff
+        cameraSound.PlayOneShot(honkBot, 1f);
+        //Jake's audio stuff
+
         GameObject go;
         go = Instantiate(bottomPrefab, botSpawn.position, Quaternion.identity, botLane);
 

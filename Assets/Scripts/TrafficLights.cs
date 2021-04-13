@@ -43,11 +43,22 @@ public class TrafficLights : MonoBehaviour
     [SerializeField] public UnityEvent onGreen;
     [SerializeField] public UnityEvent onRed;
 
+    //Jake's sound stuff
+    public GameObject camera;
+    public AudioClip redClick;
+    public AudioClip greenClick;
+    AudioSource cameraSound;
+    //Jake's sound stuff
+
     private void Awake()
     {
         greenLight = Resources.Load<Sprite>("Art/Green1");
         redLight = Resources.Load<Sprite>("Art/Red1");
         noLight = Resources.Load<Sprite>("Art/Blank");
+
+        //Jake's sound stuff
+        cameraSound = camera.GetComponent<AudioSource>();
+        //Jake's sound stuff
     }
 
     private void Start()
@@ -100,12 +111,22 @@ public class TrafficLights : MonoBehaviour
         {
             renderer.sprite = greenLight;
             blocker.enabled = false;
+
+            //Jake's audio stuff
+            cameraSound.PlayOneShot(greenClick, 1f);
+            //Jake's audio stuff
+
         }
 
         else 
         {
             renderer.sprite = redLight;
             blocker.enabled = true;
+
+            //Jake's audio stuff
+            cameraSound.PlayOneShot(redClick, 1f);
+            //Jake's audio stuff
+
         }
     }
 }
