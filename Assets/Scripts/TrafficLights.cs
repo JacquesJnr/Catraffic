@@ -50,6 +50,13 @@ public class TrafficLights : MonoBehaviour
     AudioSource cameraSound;
     //Jake's sound stuff
 
+    //switch the sprites on timers
+    //float currentTime = 0f;
+    float resetTime = 1.5f;
+    float topTime = 0f;
+    float midTime = 0f;
+    float botTime = 0f;
+
     private void Awake()
     {
         greenLight = Resources.Load<Sprite>("Art/Green1");
@@ -70,6 +77,7 @@ public class TrafficLights : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetKeyDown(topKey) || Input.GetKeyDown("[1]"))
         {
             SetLightState(1);
@@ -83,7 +91,48 @@ public class TrafficLights : MonoBehaviour
         if (Input.GetKeyDown(botKey) || Input.GetKeyDown("[3]"))
         {
             SetLightState(3);
-        }        
+        }
+
+
+        if (topLaneRenderer.sprite == greenLight)
+        {
+            topTime += Time.deltaTime;
+        }
+        else
+        {
+            topTime = 0;
+        }
+        if (topTime >= resetTime)
+        {
+            lightTimer(topLaneRenderer, trafficBlockerTop);
+        }
+
+        if (midLaneRenderer.sprite == greenLight)
+        {
+            midTime += Time.deltaTime;
+        }
+        else
+        {
+            midTime = 0;
+        }
+        if (midTime >= resetTime)
+        {
+            lightTimer(midLaneRenderer, trafficBlockerMid);
+        }
+
+        if (botLaneRenderer.sprite == greenLight)
+        {
+            botTime += Time.deltaTime;
+        }
+        else
+        {
+            botTime = 0;
+        }
+        if (botTime >= resetTime)
+        {
+            lightTimer(botLaneRenderer, trafficBlockerBot);
+        }
+
     }
 
     public void SetLightState(int trafficLight)
@@ -128,5 +177,16 @@ public class TrafficLights : MonoBehaviour
             //Jake's audio stuff
 
         }
+    }
+
+    public void lightTimer(SpriteRenderer trafficLight, BoxCollider2D blocker)
+    {
+
+        trafficLight.sprite = redLight;
+        blocker.enabled = true;
+
+        //Jake's audio stuff
+        cameraSound.PlayOneShot(redClick, 1f);
+        //Jake's audio stuff
     }
 }

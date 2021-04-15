@@ -15,7 +15,7 @@ public class PedestrianManager : MonoBehaviour
     public Transform topParent;
     public Transform botParent;
 
-    [SerializeField] private float timerSpeed = 2f;
+    [SerializeField] private float timerSpeed = 3f;
     [SerializeField] private float elapsed;
 
     void Start()
@@ -30,7 +30,7 @@ public class PedestrianManager : MonoBehaviour
         {
             elapsed = 0f;
 
-            SpawnBottomPedestrians();
+            //SpawnBottomPedestrians();
             SpawnTopPedestrians();
         }
 

@@ -25,7 +25,6 @@ public class LolipopCatManager : MonoBehaviour
         if (currentTime > redTime)
         {
             stopCat.SetActive(false);
-
         }
         else
         {
