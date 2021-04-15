@@ -17,7 +17,7 @@ public class Pedestrians : MonoBehaviour
 
         if(gameObject.tag == "PedTop")
         {
-            transform.position = Vector2.MoveTowards(transform.position ,new Vector2(0.5f, -6f), step);
+            transform.position = Vector2.MoveTowards(transform.position ,new Vector2(0f, -6f), step);
         }
 
         if (gameObject.tag == "PedBot")
