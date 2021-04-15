@@ -5,7 +5,10 @@ using UnityEngine;
 public class LolipopCatManager : MonoBehaviour
 {
 
-    public GameObject stopCat;
+    public Sprite stopCat;
+    public Sprite startCat;
+    public SpriteRenderer lolipopCat;
+
     float currentTime = 0f;
     float redTime = 1.5f;
     float timeReset = 3f;
@@ -24,11 +27,11 @@ public class LolipopCatManager : MonoBehaviour
 
         if (currentTime > redTime)
         {
-            stopCat.SetActive(false);
+            lolipopCat.sprite = stopCat;
         }
         else
         {
-            stopCat.SetActive(true);
+            lolipopCat.sprite = startCat;
         }
 
         if (currentTime > timeReset)

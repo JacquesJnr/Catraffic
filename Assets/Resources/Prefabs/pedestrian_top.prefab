@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4025634256077874699}
   - component: {fileID: 8983007406857389677}
   - component: {fileID: 5715370913332397248}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: pedestrian_top
   m_TagString: PedTop
   m_Icon: {fileID: 0}
